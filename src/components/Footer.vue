@@ -13,6 +13,6 @@ function handleClick() {
     <button icon-btn @click="handleClick" mr2>
       <i dark:i-carbon-moon i-carbon-sun block text-xl></i>
     </button>
-    <i icon-btn i-carbon-logo-github text-xl></i>
+    <a href="https://github.com/810505339/electron-vite-vue-uncoss"><i icon-btn i-carbon-logo-github text-xl></i></a>
   </div>
 </template>
