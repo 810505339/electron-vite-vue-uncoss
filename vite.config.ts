@@ -6,6 +6,7 @@ import renderer from 'vite-plugin-electron-renderer'
 import pkg from './package.json'
 import UnoCSS from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
 
 import path from 'path'
 // https://vitejs.dev/config/
@@ -78,6 +79,17 @@ export default defineConfig(({ command }) => {
         ],
         imports: ['vue','@vueuse/core'],
         vueTemplate: true,
+        dirs: [
+          'src/composables',
+          'src/stores',
+        ],
+        dts: 'src/auto-imports.d.ts'
+      }),
+      Components({
+        extensions: ['vue', 'md'],
+        // allow auto import and register components used in markdown
+        include: [/\.vue$/, /\.vue\?vue/],
+        dts: 'src/components.d.ts',
       })
     ],
     server: process.env.VSCODE_DEBUG && (() => {

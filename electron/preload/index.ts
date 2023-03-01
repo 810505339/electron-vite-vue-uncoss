@@ -1,3 +1,14 @@
+/* 
+加载之前注入某些东西(预加载任何请求html页面)
+*/
+
+import { contextBridge,ipcRenderer } from "electron"
+
+
+contextBridge.exposeInMainWorld('versions', {
+  ping: () => ipcRenderer.invoke('ping'),
+})
+
 function domReady(condition: DocumentReadyState[] = ['complete', 'interactive']) {
   return new Promise((resolve) => {
     if (condition.includes(document.readyState)) {
