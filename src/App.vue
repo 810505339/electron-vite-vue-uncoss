@@ -1,5 +1,9 @@
 <script setup lang="ts">
+const msg = ref('Hello Vue+Vite+Electron+Unocss')
 
+window.versions.change((message) => {
+  msg.value = message
+})
 </script>
 
 <template>
@@ -14,7 +18,7 @@
         <img w32 h32 m5 src="@/assets/unocss.svg" />
       </div>
     </div>
-    <HelloWorld msg="Hello Vue+Vite+Electron+Unocss" />
+    <HelloWorld :msg="msg" />
     <Footer />
   </div>
 </template>

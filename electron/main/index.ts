@@ -1,6 +1,7 @@
 import { app, BrowserWindow, shell, ipcMain } from 'electron'
 import { release } from 'node:os'
 import { join } from 'node:path'
+import createMenu from './menu'
 
 // The built directory structure
 //
@@ -53,8 +54,8 @@ async function createWindow() {
       contextIsolation: true,
     },
   })
-  ipcMain.handle('ping', () => 'pong')
-
+  //electron创建菜单
+  createMenu(win)
   if (process.env.VITE_DEV_SERVER_URL) { // electron-vite-vue#298
     win.loadURL(url)
     // Open devTool if the app is not packaged
@@ -76,11 +77,11 @@ async function createWindow() {
   // win.webContents.on('will-navigate', (event, url) => { }) #344
 
 
-  
+
 }
 
 app.whenReady().then(() => {
-  createWindow()
+  createWindow()  //创建winodow窗口
 })
 
 app.on('window-all-closed', () => {
@@ -123,5 +124,8 @@ ipcMain.handle('open-win', (_, arg) => {
     childWindow.loadFile(indexHtml, { hash: arg })
   }
 })
+
+
+ipcMain.handle('ping', () => 'pong')
 
 
