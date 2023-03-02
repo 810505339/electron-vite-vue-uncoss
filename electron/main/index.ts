@@ -1,4 +1,4 @@
-import { app, BrowserWindow, shell, ipcMain, dialog } from 'electron'
+import { app, BrowserWindow, shell, ipcMain, dialog,protocol } from 'electron'
 import { release } from 'node:os'
 import { join } from 'node:path'
 import createMenu from './menu'
@@ -52,6 +52,7 @@ async function createWindow() {
       // Read more on https://www.electronjs.org/docs/latest/tutorial/context-isolation
       nodeIntegration: true,
       contextIsolation: true,
+      webSecurity: false,
     },
   })
   //electron创建菜单
@@ -81,6 +82,11 @@ async function createWindow() {
 }
 
 app.whenReady().then(() => {
+  // protocol.registerFileProtocol('file', (request, callback) => {
+  //   console.log(1);
+  //   const pathname = decodeURI(request.url.replace('file:///', ''));
+  //   callback(pathname);
+  // })
   createWindow()  //创建winodow窗口
 })
 
@@ -129,7 +135,10 @@ ipcMain.handle('open-win', (_, arg) => {
 ipcMain.handle('ping', () => 'pong')
 ipcMain.handle('selectFile', async (event) => {
   const { filePaths } = await dialog.showOpenDialog({
-    properties: ['openFile', 'multiSelections']
+    properties: ['openFile', 'multiSelections'],
+    filters:[
+      { name: 'Images', extensions: ['jpg', 'png', 'gif'] },
+    ]
   })
   const title=filePaths?.[0]
   //修改窗口标题
