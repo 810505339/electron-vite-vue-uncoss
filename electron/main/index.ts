@@ -1,4 +1,4 @@
-import { app, BrowserWindow, shell, ipcMain } from 'electron'
+import { app, BrowserWindow, shell, ipcMain, dialog } from 'electron'
 import { release } from 'node:os'
 import { join } from 'node:path'
 import createMenu from './menu'
@@ -127,5 +127,16 @@ ipcMain.handle('open-win', (_, arg) => {
 
 
 ipcMain.handle('ping', () => 'pong')
+ipcMain.handle('selectFile', async (event) => {
+  const { filePaths } = await dialog.showOpenDialog({
+    properties: ['openFile', 'multiSelections']
+  })
+  const title=filePaths?.[0]
+  //修改窗口标题
+  BrowserWindow.fromWebContents(event.sender).setTitle(title)
+ 
+  
+  return filePaths
+})
 
 

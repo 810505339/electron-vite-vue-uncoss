@@ -19,6 +19,7 @@ window.versions.change((message) => {
       </div>
     </div>
     <HelloWorld :msg="msg" />
+    <Upload />
     <Footer />
   </div>
 </template>

@@ -9,11 +9,12 @@ contextBridge.exposeInMainWorld('versions', {   //向渲染进程传递 versions
   change: (callback: (message: any) => void) => {
     //通过回调函数传送给渲染层
     console.log(callback);
-    
+
     ipcRenderer.on('change', (event, message) => {
       callback(message)
     })
-  }
+  },
+  upload: () => ipcRenderer.invoke('selectFile')
 })
 
 
