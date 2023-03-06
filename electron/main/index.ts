@@ -1,7 +1,8 @@
-import { app, BrowserWindow, shell, ipcMain, dialog,protocol } from 'electron'
+import { app, BrowserWindow, shell, ipcMain, dialog, protocol, ipcRenderer } from 'electron'
 import { release } from 'node:os'
 import { join } from 'node:path'
-import createMenu from './menu'
+import downloadFileToFolder from './download'
+import setwallpaper from './setwallpaper'
 
 // The built directory structure
 //
@@ -45,6 +46,9 @@ async function createWindow() {
   win = new BrowserWindow({ //BrowserWindow 模块，它创建和管理应用程序 窗口。
     title: '音乐',
     icon: join(process.env.PUBLIC, 'favicon.ico'),
+    resizable: true,
+    width: 400,
+
     webPreferences: {
       preload,
       // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
@@ -56,7 +60,7 @@ async function createWindow() {
     },
   })
   //electron创建菜单
-  createMenu(win)
+
   if (process.env.VITE_DEV_SERVER_URL) { // electron-vite-vue#298
     win.loadURL(url)
     // Open devTool if the app is not packaged
@@ -136,16 +140,32 @@ ipcMain.handle('ping', () => 'pong')
 ipcMain.handle('selectFile', async (event) => {
   const { filePaths } = await dialog.showOpenDialog({
     properties: ['openFile', 'multiSelections'],
-    filters:[
+    filters: [
       { name: 'Images', extensions: ['jpg', 'png', 'gif'] },
     ]
   })
-  const title=filePaths?.[0]
+  const title = filePaths?.[0]
   //修改窗口标题
   BrowserWindow.fromWebContents(event.sender).setTitle(title)
- 
-  
+
+
   return filePaths
 })
 
+ipcMain.handle('downloadFile', async (event, url) => {
+  downloadFileToFolder(win, url)
 
+})
+
+ipcMain.handle('setwallpaper', async (event, url) => {
+  await setwallpaper(win, url)
+
+
+})
+ipcMain.on('downloadItemDone', () => {
+  console.log(1);
+
+})
+ipcRenderer.on('downloadItemDone',()=>{
+  console.log(1);
+})

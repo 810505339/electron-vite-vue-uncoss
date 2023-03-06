@@ -1,11 +1,12 @@
-export interface IVersions {
-  ping: () => Promise<void>,
-  change: (callback: (message: any) => void) => void,
-  upload: () => Promise<string[]>,
+export interface IApi {
+  downloadFile: (url: string) => Promise<void>,
+  setwallpaper: (url: string, done: () => void) => Promise<void>
 }
 
 declare global {
   interface Window {
-    versions: IVersions
+    api: IApi
   }
 }
+
+

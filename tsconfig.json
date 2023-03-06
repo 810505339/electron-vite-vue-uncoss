@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "baseUrl":"./",
-    "paths":{
+    "baseUrl": "./",
+    "paths": {
       "@/*": ["./src/*"]
     },
     "target": "ESNext",
@@ -15,12 +15,17 @@
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"],
     "skipLibCheck": true,
-    "noEmit": true
+    "noEmit": true,
+    "types": [
+      "vite/client",
+      "element-plus/global"
+    ],
   },
   "include": ["src",
-  "**/*.ts",
-  "**/*.vue"],
-  "references": [
-    { "path": "./tsconfig.node.json" }
-  ]
+    "**/*.ts",
+    "**/*.vue"
+  ],
+  "references": [{
+    "path": "./tsconfig.node.json"
+  }]
 }

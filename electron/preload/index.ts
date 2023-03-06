@@ -1,20 +1,15 @@
-/* 
+/*
 加载之前注入某些东西(预加载任何请求html页面)
 */
 
 import { contextBridge, ipcRenderer } from "electron"
 
-contextBridge.exposeInMainWorld('versions', {   //向渲染进程传递 versions渲染进程调用 window.versions.ping() invoke 是异步的
-  ping: () => ipcRenderer.invoke('ping'),
-  change: (callback: (message: any) => void) => {
-    //通过回调函数传送给渲染层
-    console.log(callback);
-
-    ipcRenderer.on('change', (event, message) => {
-      callback(message)
-    })
-  },
-  upload: () => ipcRenderer.invoke('selectFile')
+contextBridge.exposeInMainWorld('api', {   //向渲染进程传递 versions渲染进程调用 window.versions.ping() invoke 是异步的
+  downloadFile: async (url: string) => ipcRenderer.invoke('downloadFile', url),
+  setwallpaper: (url: string) => {
+    console.log(url);
+    ipcRenderer.invoke('setwallpaper', url)
+  }
 })
 
 

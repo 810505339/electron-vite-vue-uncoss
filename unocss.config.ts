@@ -11,8 +11,8 @@ import {
 
 export default defineConfig({
   shortcuts: [
-    ['icon-btn', 'inline-block cursor-pointer select-none opacity-75 transition duration-200 ease-in-out hover:opacity-100 hover:text-teal-600'],
-   
+    ['icon-btn', 'inline-block cursor-pointer select-none opacity-75 transition duration-200 ease-in-out hover:opacity-100 hover:text-blue-500'],
+
   ],
   presets: [
     presetUno(),
@@ -34,5 +34,8 @@ export default defineConfig({
     transformerDirectives(),
     transformerVariantGroup(),
   ],
+  theme: {
+   
+  },
   safelist: 'prose prose-sm m-auto text-left'.split(' '),
 })

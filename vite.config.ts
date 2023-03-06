@@ -7,7 +7,7 @@ import pkg from './package.json'
 import UnoCSS from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
-
+const { ElementPlusResolver } = require("unplugin-vue-components/resolvers");
 import path from 'path'
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => {
@@ -18,8 +18,8 @@ export default defineConfig(({ command }) => {
   const sourcemap = isServe || !!process.env.VSCODE_DEBUG
 
   return {
-    resolve:{
-      alias:{
+    resolve: {
+      alias: {
         "@": path.resolve(__dirname, "src"),
       }
     },
@@ -77,20 +77,27 @@ export default defineConfig(({ command }) => {
           /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
           /\.vue$/, /\.vue\?vue/, // .vue
         ],
-        imports: ['vue','@vueuse/core'],
+        imports: ['vue',
+          '@vueuse/core',
+         
+
+        ],
         vueTemplate: true,
         dirs: [
           'src/composables',
           'src/stores',
         ],
-        dts: 'src/auto-imports.d.ts'
+        dts: 'src/auto-imports.d.ts',
+        resolvers: [ElementPlusResolver()],
       }),
       Components({
-        extensions: ['vue', 'md'],
+        // allow auto load markdown components under `./src/components/`
+        extensions: ['vue'],
         // allow auto import and register components used in markdown
         include: [/\.vue$/, /\.vue\?vue/],
         dts: 'src/components.d.ts',
-      })
+        resolvers: [ElementPlusResolver()],
+      }),
     ],
     server: process.env.VSCODE_DEBUG && (() => {
       const url = new URL(pkg.debug.env.VITE_DEV_SERVER_URL)
