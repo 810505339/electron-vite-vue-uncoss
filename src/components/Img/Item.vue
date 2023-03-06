@@ -33,7 +33,7 @@ function wallpaper() {
   <Teleport to="#modal">
     <div v-if="modal" fixed left="0" top="0" w="100vw" h="100vh" bg="#00000080">
       <div block ref="modalRef" absolute top="25%">
-        <img :src="data.imgurl" block>
+        <img :src="data?.imgurl" block>
         <div justify-around items-center flex-row bg="slate-300/20" rounded-xl w="50%" m-auto py1 flex>
           <i icon-btn i-heroicons:arrow-down @click="download"></i>
           <i icon-btn i-heroicons:viewfinder-circle-solid @click="wallpaper"></i>
@@ -50,7 +50,7 @@ function wallpaper() {
     <div animate-pulse bg="gray-500/5" class=" w100% h100%" v-if="isLoading" text-center items-center justify-center flex>
       <i i-eos-icons:loading icon-btn></i>
     </div>
-    <img v-if="!error && !isLoading" :src="data.imgurl" block @click.stop="handleClick" h="100%">
+    <img v-if="!error && !isLoading" :src="data?.imgurl" block @click.stop="handleClick" h="100%">
 
   </div>
 </template>

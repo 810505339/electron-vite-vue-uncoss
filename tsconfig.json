@@ -21,10 +21,7 @@
       "element-plus/global"
     ],
   },
-  "include": ["src",
-    "**/*.ts",
-    "**/*.vue"
-  ],
+  "include": ["src"],
   "references": [{
     "path": "./tsconfig.node.json"
   }]
