@@ -44,11 +44,11 @@ const indexHtml = join(process.env.DIST, 'index.html')
 
 async function createWindow() {
   win = new BrowserWindow({ //BrowserWindow 模块，它创建和管理应用程序 窗口。
-    title: '音乐',
+   
     icon: join(process.env.PUBLIC, 'favicon.ico'),
     resizable: true,
-    width: 400,
-
+    width: 360,
+    frame: true,
     webPreferences: {
       preload,
       // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production

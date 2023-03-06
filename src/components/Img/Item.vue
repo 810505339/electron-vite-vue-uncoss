@@ -43,7 +43,7 @@ function wallpaper() {
     </div>
   </Teleport>
 
-  <div class="w-[300px] h-[200px]" rounded-xl overflow-hidden row ref="target" m5 shadow cursor-pointer hover:shadow-md>
+  <div class="w-[300px] h-[200px]" rounded-xl overflow-hidden row ref="target" my5 shadow cursor-pointer hover:shadow-md>
     <div v-if="error" animate-pulse bg="gray-500/5" class=" w100% h100%" text-center items-center justify-center flex>
       <i i-material-symbols:error icon-btn></i>
     </div>
