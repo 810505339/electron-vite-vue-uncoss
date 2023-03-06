@@ -2,15 +2,7 @@
 加载之前注入某些东西(预加载任何请求html页面)
 */
 
-import { contextBridge, ipcRenderer } from "electron"
 
-contextBridge.exposeInMainWorld('api', {   //向渲染进程传递 versions渲染进程调用 window.versions.ping() invoke 是异步的
-  downloadFile: async (url: string) => ipcRenderer.invoke('downloadFile', url),
-  setwallpaper: (url: string) => {
-    console.log(url);
-    ipcRenderer.invoke('setwallpaper', url)
-  }
-})
 
 
 function domReady(condition: DocumentReadyState[] = ['complete', 'interactive']) {

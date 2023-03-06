@@ -1,8 +1,8 @@
 import { app, BrowserWindow, shell, ipcMain, dialog, protocol, ipcRenderer } from 'electron'
 import { release } from 'node:os'
 import { join } from 'node:path'
-import downloadFileToFolder from './download'
-import setwallpaper from './setwallpaper'
+import downloadFileToFolder, { setType } from '../utils/downloadFile'
+
 
 // The built directory structure
 //
@@ -55,7 +55,7 @@ async function createWindow() {
       // Consider using contextBridge.exposeInMainWorld
       // Read more on https://www.electronjs.org/docs/latest/tutorial/context-isolation
       nodeIntegration: true,
-      contextIsolation: true,
+      contextIsolation: false,
       webSecurity: false,
     },
   })
@@ -82,7 +82,7 @@ async function createWindow() {
   // win.webContents.on('will-navigate', (event, url) => { }) #344
 
 
-
+  downloadFileToFolder(win)
 }
 
 app.whenReady().then(() => {
@@ -152,20 +152,10 @@ ipcMain.handle('selectFile', async (event) => {
   return filePaths
 })
 
-ipcMain.handle('downloadFile', async (event, url) => {
-  downloadFileToFolder(win, url)
 
+ipcMain.on('downloadFile', (event, url, type) => {
+  setType(type)
+  win.webContents.downloadURL(url)
 })
 
-ipcMain.handle('setwallpaper', async (event, url) => {
-  await setwallpaper(win, url)
 
-
-})
-ipcMain.on('downloadItemDone', () => {
-  console.log(1);
-
-})
-ipcRenderer.on('downloadItemDone',()=>{
-  console.log(1);
-})

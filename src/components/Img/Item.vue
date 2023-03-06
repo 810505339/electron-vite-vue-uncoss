@@ -1,18 +1,9 @@
 <script setup lang="ts">
 import { useAxios } from '@vueuse/integrations/useAxios'
-import { ElMessage } from 'element-plus'
-import { ipcRenderer } from 'electron'
-
+import { ipcRenderer } from 'electron';
 const modal = ref(false)
 const modalRef = ref<HTMLDivElement>()
-const props = defineProps<{ id: string }>()
-
-
-
 const { isLoading, error, data } = useAxios<{ imgurl: string }>('https://api.ixiaowai.cn/mcapi/mcapi2.php?return=json')
-
-
-
 onClickOutside(
   modalRef,
   (event) => {
@@ -26,22 +17,14 @@ function handleClick() {
 }
 
 function download() {
-  console.log(window.api.downloadFile);
 
-  window.api.downloadFile(data.value!.imgurl).then(res => {
-
-
-    ElMessage({
-      message: '下载成功',
-      type: 'success',
-    })
-
-  })
+  ipcRenderer.send('downloadFile', data.value!.imgurl, 'down')
 
 }
 
 function wallpaper() {
-  window.api.setwallpaper(data.value!.imgurl)
+  ipcRenderer.send('downloadFile', data.value!.imgurl, 'set')
+
 }
 
 </script>
