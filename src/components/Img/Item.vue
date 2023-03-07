@@ -2,7 +2,6 @@
 import { useAxios } from '@vueuse/integrations/useAxios'
 import { ElMessage } from 'element-plus'
 import { ipcRenderer } from 'electron'
-
 const modal = ref(false)
 const modalRef = ref<HTMLDivElement>()
 const props = defineProps<{ id: string }>()
@@ -26,22 +25,27 @@ function handleClick() {
 }
 
 function download() {
-  console.log(window.api.downloadFile);
-
-  window.api.downloadFile(data.value!.imgurl).then(res => {
-
-
+  window.api.downloadFile(data.value!.imgurl, () => {
     ElMessage({
-      message: '下载成功',
       type: 'success',
+      message: '下载成功'
     })
 
   })
 
 }
 
-function wallpaper() {
-  window.api.setwallpaper(data.value!.imgurl)
+async function wallpaper() {
+  await window.api.setwallpaper(data.value!.imgurl, () => {
+    ElMessage({
+      type: 'success',
+      message: '设置壁纸成功'
+    })
+
+  })
+
+
+
 }
 
 </script>

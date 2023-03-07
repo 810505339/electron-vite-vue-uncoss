@@ -1,6 +1,6 @@
 export interface IApi {
-  downloadFile: (url: string) => Promise<void>,
-  setwallpaper: (url: string, done: () => void) => Promise<void>
+  downloadFile: (url: string, done: () => void) => Promise<void>,
+  setwallpaper: (url: string,done: () => void) => Promise<void>
 }
 
 declare global {

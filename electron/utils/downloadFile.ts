@@ -1,11 +1,24 @@
 
 import { BrowserWindow, app } from 'electron'
 import { join } from 'node:path'
-function downloadFileToFolder(win: BrowserWindow) {
 
+ let type: "set" | "down" = "down"
+
+ export function setType(newtype: "set" | "down") {
+  type = newtype
+}
+
+function downloadFileToFolder(win: BrowserWindow) {
+  console.log(type);
+  
   win.webContents.session.on('will-download', (event, item, webContents) => {
-    app.getAppPath()
-    item.setSavePath('/tmp/save.pdf')
+  
+    const filePath = join(app.getAppPath(), '/download', `wallpaper.jpg`);
+    if (type === 'set') {
+      item.setSavePath(filePath)
+    }
+
+
     item.on('updated', (event, state) => {
       if (state === 'interrupted') {
         console.log('Download is interrupted but can be resumed')
@@ -19,7 +32,15 @@ function downloadFileToFolder(win: BrowserWindow) {
     })
     item.once('done', (event, state) => {
       if (state === 'completed') {
-        console.log('Download successfully')
+
+        if (type === 'set') {
+          import("wallpaper").then(({ setWallpaper }) => {
+            setWallpaper(filePath)
+          })
+        }
+        webContents.send('downloadCompleted')
+        console.log('成功');
+        
       } else {
         console.log(`Download failed: ${state}`)
       }

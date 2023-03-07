@@ -5,10 +5,17 @@
 import { contextBridge, ipcRenderer } from "electron"
 
 contextBridge.exposeInMainWorld('api', {   //向渲染进程传递 versions渲染进程调用 window.versions.ping() invoke 是异步的
-  downloadFile: async (url: string) => ipcRenderer.invoke('downloadFile', url),
-  setwallpaper: (url: string) => {
-    console.log(url);
-    ipcRenderer.invoke('setwallpaper', url)
+  downloadFile: async (url: string, done: () => void) => {
+    ipcRenderer.send('downloadFile', url)
+
+
+  },
+  setwallpaper: (url: string, done: () => void) => {
+    ipcRenderer.send('setwallpaper', url)
+
+  },
+  test: () => {
+    ipcRenderer.on('test')
   }
 })
 

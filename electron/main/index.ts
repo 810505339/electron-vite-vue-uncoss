@@ -1,8 +1,8 @@
-import { app, BrowserWindow, shell, ipcMain, dialog, protocol, ipcRenderer } from 'electron'
+import { app, BrowserWindow, shell, ipcMain, dialog, protocol, ipcRenderer, session } from 'electron'
 import { release } from 'node:os'
 import { join } from 'node:path'
-import downloadFileToFolder from './download'
-import setwallpaper from './setwallpaper'
+import downloadFileToFolder, { setType } from '../utils/downloadFile'
+
 
 // The built directory structure
 //
@@ -57,6 +57,7 @@ async function createWindow() {
       nodeIntegration: true,
       contextIsolation: true,
       webSecurity: false,
+     
     },
   })
   //electron创建菜单
@@ -92,6 +93,8 @@ app.whenReady().then(() => {
   //   callback(pathname);
   // })
   createWindow()  //创建winodow窗口
+  downloadFileToFolder(win)
+
 })
 
 app.on('window-all-closed', () => {
@@ -117,6 +120,7 @@ app.on('activate', () => {
     createWindow()
   }
 })
+
 
 // New window example arg: new windows url
 ipcMain.handle('open-win', (_, arg) => {
@@ -152,20 +156,16 @@ ipcMain.handle('selectFile', async (event) => {
   return filePaths
 })
 
-ipcMain.handle('downloadFile', async (event, url) => {
-  downloadFileToFolder(win, url)
+
+
+
+ipcMain.on('setwallpaper', (env, url) => {
+  setType('set')
+  win.webContents.downloadURL(url)
 
 })
 
-ipcMain.handle('setwallpaper', async (event, url) => {
-  await setwallpaper(win, url)
-
-
-})
-ipcMain.on('downloadItemDone', () => {
-  console.log(1);
-
-})
-ipcRenderer.on('downloadItemDone',()=>{
-  console.log(1);
+ipcMain.on('downloadFile', (env, url) => {
+  setType('down')
+  win.webContents.downloadURL(url)
 })
