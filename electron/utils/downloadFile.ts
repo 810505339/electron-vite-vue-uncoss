@@ -30,21 +30,11 @@ function downloadFileToFolder(win: BrowserWindow) {
       if (state === 'completed') {
 
         if (type === 'set') {
-<<<<<<< HEAD
-          import("wallpaper").then(({ setWallpaper }) => {
-            setWallpaper(filePath)
-          })
-        }
-        webContents.send('downloadCompleted')
-        console.log('成功');
-        
-=======
           import('wallpaper').then(async ({ setWallpaper }) => {
             await setWallpaper(filePath)
             webContents.send('downloadItemDone', type)
           })
         }
->>>>>>> a3eeaa2bb0c84a6000283680f641e7cda7f0df27
       } else {
 
         console.log(`Download failed: ${state}`)

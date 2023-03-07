@@ -156,26 +156,9 @@ ipcMain.handle('selectFile', async (event) => {
   return filePaths
 })
 
-<<<<<<< HEAD
-
-
-
-ipcMain.on('setwallpaper', (env, url) => {
-  setType('set')
-  win.webContents.downloadURL(url)
-=======
->>>>>>> a3eeaa2bb0c84a6000283680f641e7cda7f0df27
 
 ipcMain.on('downloadFile', (event, url, type) => {
   setType(type)
   win.webContents.downloadURL(url)
 })
 
-<<<<<<< HEAD
-ipcMain.on('downloadFile', (env, url) => {
-  setType('down')
-  win.webContents.downloadURL(url)
-})
-=======
-
->>>>>>> a3eeaa2bb0c84a6000283680f641e7cda7f0df27

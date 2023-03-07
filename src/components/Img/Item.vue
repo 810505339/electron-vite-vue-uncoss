@@ -1,11 +1,6 @@
 <script setup lang="ts">
 import { useAxios } from '@vueuse/integrations/useAxios'
-<<<<<<< HEAD
-import { ElMessage } from 'element-plus'
-import { ipcRenderer } from 'electron'
-=======
 import { ipcRenderer } from 'electron';
->>>>>>> a3eeaa2bb0c84a6000283680f641e7cda7f0df27
 const modal = ref(false)
 const modalRef = ref<HTMLDivElement>()
 const { isLoading, error, data } = useAxios<{ imgurl: string }>('https://api.ixiaowai.cn/mcapi/mcapi2.php?return=json')
