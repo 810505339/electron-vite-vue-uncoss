@@ -44,11 +44,12 @@ const indexHtml = join(process.env.DIST, 'index.html')
 
 async function createWindow() {
   win = new BrowserWindow({ //BrowserWindow 模块，它创建和管理应用程序 窗口。
-   
+
     icon: join(process.env.PUBLIC, 'favicon.ico'),
-    resizable: true,
+    resizable: false,
     width: 360,
-    frame: true,
+    height: 650,
+    frame: false,
     webPreferences: {
       preload,
       // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
@@ -57,7 +58,7 @@ async function createWindow() {
       nodeIntegration: true,
       contextIsolation: false,
       webSecurity: false,
-     
+
     },
   })
   //electron创建菜单
@@ -83,7 +84,7 @@ async function createWindow() {
   // win.webContents.on('will-navigate', (event, url) => { }) #344
 
 
-  downloadFileToFolder(win)
+  win.setMaximizable(false)
 }
 
 app.whenReady().then(() => {
@@ -160,5 +161,10 @@ ipcMain.handle('selectFile', async (event) => {
 ipcMain.on('downloadFile', (event, url, type) => {
   setType(type)
   win.webContents.downloadURL(url)
-})
+  console.log('downloadFile');
 
+})
+ipcMain.on('close', () => {
+  win = null
+  if (process.platform !== 'darwin') app.quit()  //IOS平台退出
+})

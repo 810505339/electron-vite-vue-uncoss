@@ -5,4 +5,11 @@
 
 body{
   overflow: hidden;
+  -webkit-app-region: drag;
+}
+.el-scrollbar{
+  -webkit-app-region: no-drag;
+}
+i {
+  -webkit-app-region: no-drag;
 }
