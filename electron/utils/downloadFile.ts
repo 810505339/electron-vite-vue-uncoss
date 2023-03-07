@@ -1,18 +1,14 @@
 
 import { BrowserWindow, app } from 'electron'
 import { join } from 'node:path'
-
- let type: "set" | "down" = "down"
-
- export function setType(newtype: "set" | "down") {
-  type = newtype
+export type IType = 'set' | 'down'
+let type: IType = 'set'
+export function setType(newType: IType) {
+  type = newType
 }
-
 function downloadFileToFolder(win: BrowserWindow) {
-  console.log(type);
-  
   win.webContents.session.on('will-download', (event, item, webContents) => {
-  
+    // 无需对话框提示， 直接将文件保存到路径
     const filePath = join(app.getAppPath(), '/download', `wallpaper.jpg`);
     if (type === 'set') {
       item.setSavePath(filePath)
@@ -34,6 +30,7 @@ function downloadFileToFolder(win: BrowserWindow) {
       if (state === 'completed') {
 
         if (type === 'set') {
+<<<<<<< HEAD
           import("wallpaper").then(({ setWallpaper }) => {
             setWallpaper(filePath)
           })
@@ -41,10 +38,20 @@ function downloadFileToFolder(win: BrowserWindow) {
         webContents.send('downloadCompleted')
         console.log('成功');
         
+=======
+          import('wallpaper').then(async ({ setWallpaper }) => {
+            await setWallpaper(filePath)
+            webContents.send('downloadItemDone', type)
+          })
+        }
+>>>>>>> a3eeaa2bb0c84a6000283680f641e7cda7f0df27
       } else {
+
         console.log(`Download failed: ${state}`)
       }
     })
+
+
   })
 
 }

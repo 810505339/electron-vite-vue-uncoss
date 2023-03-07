@@ -44,18 +44,18 @@ const indexHtml = join(process.env.DIST, 'index.html')
 
 async function createWindow() {
   win = new BrowserWindow({ //BrowserWindow 模块，它创建和管理应用程序 窗口。
-    title: '音乐',
+   
     icon: join(process.env.PUBLIC, 'favicon.ico'),
     resizable: true,
-    width: 400,
-
+    width: 360,
+    frame: true,
     webPreferences: {
       preload,
       // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
       // Consider using contextBridge.exposeInMainWorld
       // Read more on https://www.electronjs.org/docs/latest/tutorial/context-isolation
       nodeIntegration: true,
-      contextIsolation: true,
+      contextIsolation: false,
       webSecurity: false,
      
     },
@@ -83,7 +83,7 @@ async function createWindow() {
   // win.webContents.on('will-navigate', (event, url) => { }) #344
 
 
-
+  downloadFileToFolder(win)
 }
 
 app.whenReady().then(() => {
@@ -156,16 +156,26 @@ ipcMain.handle('selectFile', async (event) => {
   return filePaths
 })
 
+<<<<<<< HEAD
 
 
 
 ipcMain.on('setwallpaper', (env, url) => {
   setType('set')
   win.webContents.downloadURL(url)
+=======
+>>>>>>> a3eeaa2bb0c84a6000283680f641e7cda7f0df27
 
+ipcMain.on('downloadFile', (event, url, type) => {
+  setType(type)
+  win.webContents.downloadURL(url)
 })
 
+<<<<<<< HEAD
 ipcMain.on('downloadFile', (env, url) => {
   setType('down')
   win.webContents.downloadURL(url)
 })
+=======
+
+>>>>>>> a3eeaa2bb0c84a6000283680f641e7cda7f0df27
