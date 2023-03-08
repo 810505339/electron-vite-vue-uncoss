@@ -79,7 +79,7 @@ export default defineConfig(({ command }) => {
         ],
         imports: ['vue',
           '@vueuse/core',
-         
+
 
         ],
         vueTemplate: true,
@@ -97,6 +97,7 @@ export default defineConfig(({ command }) => {
         include: [/\.vue$/, /\.vue\?vue/],
         dts: 'src/components.d.ts',
         resolvers: [ElementPlusResolver()],
+        directoryAsNamespace: true
       }),
     ],
     server: process.env.VSCODE_DEBUG && (() => {

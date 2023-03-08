@@ -3,7 +3,7 @@
  */
 {
   "appId": "YourAppID",
-  "asar": true,
+  "asar": false,
   "icon": "public/favicon.ico",
   "directories": {
     "output": "release/${version}"
